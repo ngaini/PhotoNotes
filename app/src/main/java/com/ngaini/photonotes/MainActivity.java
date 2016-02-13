@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import java.util.List;
+
 
 public class MainActivity extends ActionBarActivity {
 
@@ -20,6 +22,9 @@ public class MainActivity extends ActionBarActivity {
         //convert array into list items
         ListAdapter list_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, messages);
 
+        //create a listView variable for the custom adapter for notes
+        ListView notes_listView = (ListView) findViewById(R.id.notes_listView);
+        notes_listView.setAdapter(list_adapter);
 
 
     }
