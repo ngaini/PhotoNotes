@@ -1,5 +1,7 @@
 package com.ngaini.photonotes;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -24,9 +26,12 @@ public class MainActivity extends ActionBarActivity {
 
         // using the custom adapter
         ListAdapter list_adapter = new NotesAdapter(this, messages);
+
         //create a listView variable for the custom adapter for notes
         ListView notes_listView = (ListView) findViewById(R.id.notes_listView);
         notes_listView.setAdapter(list_adapter);
+
+        FloatingActionButton fab_button = (FloatingActionButton) findViewById(R.id.fab_button);
 
         //Action when item from list is clicked
         notes_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -39,6 +44,19 @@ public class MainActivity extends ActionBarActivity {
 
             }
         });
+
+        // FAB clicked
+        fab_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Toast.makeText(MainActivity.this , "fab clicked", Toast.LENGTH_SHORT).show();
+
+                // launch add photo activity
+                Intent addPhotoIntent = new Intent(MainActivity.this, AddPhotoActivity.class);
+                startActivity(addPhotoIntent);
+            }
+        });
+
 
 
     }

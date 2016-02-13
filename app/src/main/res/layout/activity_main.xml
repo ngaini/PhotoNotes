@@ -10,14 +10,14 @@
         android:id="@+id/notes_listView">
     
 
-        </ListView>
+    </ListView>
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/fab_button"
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add_white_48dp"
         app:elevation="6dp"
-
         app:layout_anchorGravity="bottom|right|end" />
 </android.support.design.widget.CoordinatorLayout>
