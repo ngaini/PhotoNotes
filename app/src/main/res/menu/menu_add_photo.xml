@@ -4,4 +4,11 @@
     tools:context="com.ngaini.photonotes.AddPhotoActivity">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item
+        android:id="@+id/save_menu_button"
+        android:title=""
+        android:icon="@drawable/ic_done_white_48dp"
+
+        app:showAsAction="always"/>
+
 </menu>
