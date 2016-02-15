@@ -60,7 +60,7 @@ public class AddPhotoActivity extends ActionBarActivity {
 //                startActivityForResult(camera_intent, REQUEST_IMAGE_CAPTURE);
 //              button disappears after taking picture
 //              fab_camera.setVisibility(View.INVISIBLE);
-                TextView et = (TextView)findViewById(R.id.caption_editText);
+                EditText et = (EditText)findViewById(R.id.caption_editText);
                 if (camera_intent.resolveActivity(getPackageManager()) != null) {
                     // Create the File where the photo should go
                     File photoFile = null;
@@ -68,7 +68,7 @@ public class AddPhotoActivity extends ActionBarActivity {
 
                         photoFile = createImageFile();
                         Log.v("WTF!!" , "path is "+photoFile.toString());
-                        et.setText(photoFile.getAbsolutePath().toString());
+//                        et.setText(photoFile.getAbsolutePath().toString());
 //                        Toast.makeText(AddPhotoActivity.this, photoFile.toString(),Toast.LENGTH_LONG);
                     } catch (IOException ex) {
                         // Error occurred while creating the File
