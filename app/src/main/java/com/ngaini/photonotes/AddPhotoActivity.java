@@ -1,7 +1,10 @@
 package com.ngaini.photonotes;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
@@ -10,6 +13,7 @@ import android.support.design.widget.FloatingActionButton;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.internal.view.menu.MenuView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,14 +34,17 @@ public class AddPhotoActivity extends ActionBarActivity {
 
     static final int REQUEST_IMAGE_CAPTURE=1;
     String mCurrentPhotoPath;
+//    ImageView captured_imageView = (ImageView) findViewById(R.id.captured_image);
+//    EditText caption_id = (EditText)findViewById(R.id.caption_editText);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_photo);
-//        TextView et = (TextView)findViewById(R.id.caption_editText);
+        ImageView captured_imageView = (ImageView) findViewById(R.id.captured_image);
+        EditText caption_id = (EditText)findViewById(R.id.caption_editText);
         //action for the FAB add photo button
         final FloatingActionButton fab_camera = (FloatingActionButton) findViewById(R.id.fab_addPhoto_button);
-//        ImageView captured_imageView = (ImageView) findViewById(R.id.captured_image);
+
 
         //disable the button if no camera available
         if(!hasCamera())
@@ -60,7 +67,7 @@ public class AddPhotoActivity extends ActionBarActivity {
 //                startActivityForResult(camera_intent, REQUEST_IMAGE_CAPTURE);
 //              button disappears after taking picture
 //              fab_camera.setVisibility(View.INVISIBLE);
-                EditText et = (EditText)findViewById(R.id.caption_editText);
+                
                 if (camera_intent.resolveActivity(getPackageManager()) != null) {
                     // Create the File where the photo should go
                     File photoFile = null;
@@ -68,7 +75,7 @@ public class AddPhotoActivity extends ActionBarActivity {
 
                         photoFile = createImageFile();
                         Log.v("WTF!!" , "path is "+photoFile.toString());
-//                        et.setText(photoFile.getAbsolutePath().toString());
+//
 //                        Toast.makeText(AddPhotoActivity.this, photoFile.toString(),Toast.LENGTH_LONG);
                     } catch (IOException ex) {
                         // Error occurred while creating the File
@@ -102,7 +109,7 @@ public class AddPhotoActivity extends ActionBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK)
         {
-            ImageView captured_imageView = (ImageView) findViewById(R.id.captured_image);
+
             // get the photo
 //            Bundle extras = data.getExtras();
 //            Bitmap photo = (Bitmap) extras.get("data");
@@ -171,5 +178,27 @@ public class AddPhotoActivity extends ActionBarActivity {
 //        Toast.makeText(AddPhotoActivity.this, mCurrentPhotoPath,Toast.LENGTH_LONG);
         Log.v("SEE THIS!!" , "path is :"+mCurrentPhotoPath);
         return image;
+    }
+
+    // save caption and image valus
+    public void saveAction(MenuItem menuItem)
+    {
+        ImageView captured_imageView = (ImageView) findViewById(R.id.captured_image);
+        EditText caption_id = (EditText)findViewById(R.id.caption_editText);
+
+        String caption_value=caption_id.getText().toString();
+        Log.v("WTF", "caption value is "+caption_value+" path"+mCurrentPhotoPath);
+        Context context = AddPhotoActivity.this.getApplicationContext();
+        MyDBHandler handle_db = new MyDBHandler(AddPhotoActivity.this.getApplicationContext(),null,null,1);
+
+        //collect values
+//        SQLiteDatabase db = handle_db.getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//        values.put(MyDBHandler.PHOTO_PATH_COLUMN, mCurrentPhotoPath);
+//        values.put(MyDBHandler.PHOTO_NOTE_COLUMN, caption_value);
+//        db.insert(MyDBHandler.TABLE_NAME, null,values);
+//        db.close();
+        handle_db.add_photo_to_db(mCurrentPhotoPath,caption_value);
+
     }
 }

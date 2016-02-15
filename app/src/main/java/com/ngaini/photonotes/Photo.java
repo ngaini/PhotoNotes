@@ -21,9 +21,9 @@ public class Photo {
 
     public Photo(int id, String path, String caption)
     {
-        this.id = id;
-        photo_path = path;
-        this.caption = caption;
+//        this.id = id;
+        setPath(path);
+        setCaption(caption);
 
     }
 
