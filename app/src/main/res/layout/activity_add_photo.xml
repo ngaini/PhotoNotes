@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/orangutan"
-
+            android:id="@+id/captured_image"
             android:background="#000"/>
 
         <android.support.design.widget.FloatingActionButton
@@ -51,13 +51,15 @@
         android:layout_weight="1"
         android:background="#ffd4ff35"
         >
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center|center_vertical"
-            android:hint="Enter a caption"
+            android:text="Enter a caption"
             android:drawableRight="@drawable/ic_create_black_48dp"
-            android:editable="false"
+            android:id="@+id/caption_editText"
+
+
             />
 
 

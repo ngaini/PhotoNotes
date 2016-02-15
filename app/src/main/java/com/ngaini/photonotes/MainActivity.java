@@ -52,8 +52,8 @@ public class MainActivity extends ActionBarActivity {
 //                Toast.makeText(MainActivity.this , "fab clicked", Toast.LENGTH_SHORT).show();
 
                 // launch add photo activity
-                Intent addPhotoIntent = new Intent(MainActivity.this, AddPhotoActivity.class);
-                startActivity(addPhotoIntent);
+                Intent addphoto_intent = new Intent(MainActivity.this, AddPhotoActivity.class);
+                startActivity(addphoto_intent);
             }
         });
 
