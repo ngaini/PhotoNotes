@@ -21,7 +21,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public static final String TABLE_NAME="photo";
 
     //column names
-    public static final String COLUMN_ID= "id" ;
+    public static final String COLUMN_ID= "_id" ;
     public static final String PHOTO_PATH_COLUMN= "photo_path" ;
     public static final String PHOTO_NOTE_COLUMN= "photo_caption";
     static final String TABLE_CREATE = "CREATE TABLE "+TABLE_NAME+" ("+COLUMN_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+PHOTO_PATH_COLUMN+" VARCHAR(255), "+PHOTO_NOTE_COLUMN+" VARCHAR(255));";
@@ -34,7 +34,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
 //        PHOTO_PATH_COLUMN = "photo_path";
 //        PHOTO_NOTE_COLUMN= "photo_caption";
 //        COLUMN_ID = "id";
-        this.context = context;
+//        this.context = context;
     }
 
 
@@ -65,7 +65,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         values.put(PHOTO_PATH_COLUMN, path);
         values.put(PHOTO_NOTE_COLUMN, caption);
 
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_NAME,null,values);
         db.close();
     }
@@ -93,4 +93,14 @@ public class MyDBHandler extends SQLiteOpenHelper {
 //        db.close();
 //        return dbString;
 //    }
+
+    public Cursor getAllRows()
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM "+TABLE_NAME;
+
+        return db.rawQuery(query, null);
+    }
+
+
 }
