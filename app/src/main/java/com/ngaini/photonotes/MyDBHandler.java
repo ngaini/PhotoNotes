@@ -67,7 +67,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_NAME,null,values);
-        db.close();
+//        db.close();
     }
 
     //print out the database

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -32,6 +33,8 @@ import java.util.Date;
 
 public class AddPhotoActivity extends ActionBarActivity {
 
+    File photoFile;
+    private static String photo_path_value;
     static final int REQUEST_IMAGE_CAPTURE=1;
     String mCurrentPhotoPath;
 //    ImageView captured_imageView = (ImageView) findViewById(R.id.captured_image);
@@ -70,7 +73,7 @@ public class AddPhotoActivity extends ActionBarActivity {
                 
                 if (camera_intent.resolveActivity(getPackageManager()) != null) {
                     // Create the File where the photo should go
-                    File photoFile = null;
+                    photoFile = null;
                     try {
 
                         photoFile = createImageFile();
@@ -79,16 +82,18 @@ public class AddPhotoActivity extends ActionBarActivity {
 //                        Toast.makeText(AddPhotoActivity.this, photoFile.toString(),Toast.LENGTH_LONG);
                     } catch (IOException ex) {
                         // Error occurred while creating the File
-                        Log.v("WTF!!" , "path is "+photoFile.toString());
+                        Log.e("PHOTO !@#" , "photo file null "+ex.toString());
                     }
                     // Continue only if the File was successfully created
                     if (photoFile != null) {
-                        camera_intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                                Uri.fromFile(photoFile));
-                        Log.v("WTF" , "path is :"+photoFile.getAbsolutePath().toString());
+                        camera_intent.putExtra("data",getPath());
+                        setResult(RESULT_OK, camera_intent);
+//                        camera_intent.putExtra(MediaStore.EXTRA_OUTPUT,
+//                                Uri.fromFile(photoFile));
+//                        Log.v("WTF" , "path is :"+photoFile.getAbsolutePath().toString());
 
-                        Toast.makeText(AddPhotoActivity.this, photoFile.getAbsolutePath().toString(),Toast.LENGTH_LONG);
-//                        startActivityForResult(camera_intent, REQUEST_IMAGE_CAPTURE);
+//                        Toast.makeText(AddPhotoActivity.this, photoFile.getAbsolutePath().toString(),Toast.LENGTH_LONG);
+                        startActivityForResult(camera_intent, REQUEST_IMAGE_CAPTURE);
                     }
                 }
             }
@@ -107,10 +112,10 @@ public class AddPhotoActivity extends ActionBarActivity {
     //return image taken
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK)
-        {
 
-            // get the photo
+
+//            // get the photo
+//            ImageView captured_imageView = (ImageView)findViewById(R.id.captured_image);
 //            Bundle extras = data.getExtras();
 //            Bitmap photo = (Bitmap) extras.get("data");
 //            captured_imageView.setImageBitmap(photo);
@@ -129,9 +134,29 @@ public class AddPhotoActivity extends ActionBarActivity {
 //                    CameraPictureActivity.class);
 //            startActivity(i);
 //            finish();
+            super.onActivityResult(requestCode,resultCode,data);
+            if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+//                Intent data1 = getIntent();
+                Bundle extras = data.getExtras();
+//                Log.v("A!@#!@",""+extras.toString() );
+//                if(extras!=null)
+//                {
+//                    BitmapFactory.Options options = new BitmapFactory.Options();
+//                    options.inSampleSize = 4;
+//                    String path = extras.get("data").toString();
+
+//                    Bitmap imageBitmap = BitmapFactory.decodeFile(path, options);
+                    Bitmap imageBitmap = (Bitmap) extras.get("data");
+                    ImageView image_value = (ImageView)findViewById(R.id.captured_image);
+                    image_value.setImageBitmap(imageBitmap);
+//                }
+//                else
+//                {
+                    Log.e("NULL VALUE","value is null "+extras);
+//                }
+            }
 
 
-        }
     }
 
 
@@ -176,9 +201,12 @@ public class AddPhotoActivity extends ActionBarActivity {
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = "file:" + image.getAbsolutePath();
 //        Toast.makeText(AddPhotoActivity.this, mCurrentPhotoPath,Toast.LENGTH_LONG);
-        Log.v("SEE THIS!!" , "path is :"+mCurrentPhotoPath);
+//        Log.v("SEE THIS!!" , "path is :"+mCurrentPhotoPath);
+        setPath(image.getAbsolutePath());
         return image;
     }
+
+    //
 
     // save caption and image valus
     public void saveAction(MenuItem menuItem)
@@ -200,5 +228,15 @@ public class AddPhotoActivity extends ActionBarActivity {
 //        db.close();
         handle_db.add_photo_to_db(mCurrentPhotoPath,caption_value);
 
+    }
+
+    public void setPath(String path_val)
+    {
+        photo_path_value = path_val;
+    }
+
+    public String getPath()
+    {
+        return photo_path_value;
     }
 }

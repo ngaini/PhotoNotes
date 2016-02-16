@@ -1,7 +1,10 @@
 package com.ngaini.photonotes;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -24,11 +27,20 @@ public class ViewPhotoActivity extends ActionBarActivity {
         populate_view(values1, values2);
     }
 
-    private void populate_view(String path, String caption) {
+    private void populate_view(String caption, String path) {
         ImageView imageView_id = (ImageView)findViewById(R.id.view_image);
         TextView  caption_id =(TextView) findViewById(R.id.view_caption_textView);
+        path="file:"+path;
 //        imageView_id.set
+        Log.v("CONFIRMATION", "caption: "+caption+" || path:"+path);
+
+        //for decoding the image from path
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 6;  // Experiment with different sizes
+//        Bitmap b = BitmapFactory.decodeStream(path);
+        Bitmap b = BitmapFactory.decodeFile(path, options);
         caption_id.setText(caption);
+        imageView_id.setImageBitmap(b);
 
     }
 

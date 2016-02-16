@@ -86,6 +86,7 @@ public class MainActivity extends ActionBarActivity {
                 data.putString("path_value",path);
                 intent.putExtras(data);
                 startActivity(intent);
+                data_cursor.close();
             }
         });
 //

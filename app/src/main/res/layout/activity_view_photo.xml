@@ -28,11 +28,10 @@
             android:layout_height="match_parent"
             android:gravity="center|center_vertical"
             android:layout_weight="3.5"
-            android:drawableRight="@drawable/ic_create_black_48dp"
+
             android:id="@+id/view_caption_textView"
-            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890,?!@. "
-            android:maxLength="30"
-            android:hint="Enter caption: Max 30 characters"
+
+            android:text="OLA OLA"
 
             />
 
