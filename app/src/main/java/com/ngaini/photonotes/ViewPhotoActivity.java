@@ -4,14 +4,32 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 
 public class ViewPhotoActivity extends ActionBarActivity {
-
+    String values1,values2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_photo);
+        Bundle extras = getIntent().getExtras();
+        if(extras!=null)
+        {
+
+            values1 = extras.getString("caption_value");
+            values2 = extras.getString("path_value");
+        }
+        populate_view(values1, values2);
+    }
+
+    private void populate_view(String path, String caption) {
+        ImageView imageView_id = (ImageView)findViewById(R.id.view_image);
+        TextView  caption_id =(TextView) findViewById(R.id.view_caption_textView);
+//        imageView_id.set
+        caption_id.setText(caption);
+
     }
 
 

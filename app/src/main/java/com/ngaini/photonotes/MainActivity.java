@@ -18,6 +18,8 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
+import java.util.Vector;
+
 
 public class MainActivity extends ActionBarActivity {
 
@@ -33,7 +35,7 @@ public class MainActivity extends ActionBarActivity {
         SQLiteDatabase db = handler_db.getWritableDatabase();
         Cursor notes_cursor = db.rawQuery("SELECT * FROM photo", null);
 //        // using the custom adapter
-        NotesCursorAdapter note_adapter = new NotesCursorAdapter(this,notes_cursor,0);
+        final NotesCursorAdapter note_adapter = new NotesCursorAdapter(this,notes_cursor,0);
         ListView notes_listView = (ListView) findViewById(R.id.notes_listView);
 //        //create a listView variable for the custom adapter for notes
 ////        ListView notes_listView = (ListView) findViewById(R.id.notes_listView);
@@ -66,9 +68,24 @@ public class MainActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 //fetching the value of the item at clicked position
-                String note_message = String.valueOf(parent.getItemAtPosition(position));
-                Toast.makeText(MainActivity.this , note_message+" hee haw", Toast.LENGTH_SHORT).show();
+//                String note_message = String.valueOf(parent.getItemAtPosition(position));
+//                Toast.makeText(MainActivity.this , note_message+" hee haw", Toast.LENGTH_SHORT).show();
 
+                // action for cursor adapter
+                Cursor data_cursor = (Cursor) note_adapter.getItem(position);
+                data_cursor.moveToPosition(position);
+
+                int idee = data_cursor.getInt(data_cursor.getColumnIndexOrThrow("_id"));
+                String path = data_cursor.getString(data_cursor.getColumnIndexOrThrow("photo_path"));
+                String caption = data_cursor.getString(data_cursor.getColumnIndexOrThrow("photo_caption"));
+
+                //create intent
+                Intent intent = new Intent(MainActivity.this, ViewPhotoActivity.class);
+                Bundle data = new Bundle();
+                data.putString("caption_value",caption);
+                data.putString("path_value",path);
+                intent.putExtras(data);
+                startActivity(intent);
             }
         });
 //
