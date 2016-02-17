@@ -8,9 +8,14 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/save_menu_button"
-        android:title=""
-        android:icon="@drawable/ic_done_white_48dp"
+        android:title="Save"
+
         android:onClick="saveAction"
         app:showAsAction="always"/>
+    <item
+        android:id="@+id/zoo_uninstall"
+        android:title="Uninstall"
+        android:orderInCategory="99"
+        app:showAsAction="never"/>
 
 </menu>
